@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.data.home.Movie
 import com.manuellugodev.movie.data.home.interactorHome
+import com.manuellugodev.movie.vo.Resource
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
@@ -52,13 +53,30 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
     }
 
-    private fun updateListMovie(list:List<Movie>){
+    private fun updateListMovie(list: Resource<List<Movie>>){
 
-        rvRecomendadas.adapter=adapterListMovies(requireContext(),list,this)
-        rvAccion.adapter=adapterListMovies(requireContext(),list,this)
-        rvDrama.adapter=adapterListMovies(requireContext(),list,this)
-        rvRomance.adapter=adapterListMovies(requireContext(),list,this)
-        rvTerror.adapter=adapterListMovies(requireContext(),list,this)
+        when(list){
+
+            is Resource.Success -> {
+                progressBar.visibility=View.GONE
+
+                rvRecomendadas.adapter=adapterListMovies(requireContext(),list.data,this)
+                rvAccion.adapter=adapterListMovies(requireContext(),list.data,this)
+                rvDrama.adapter=adapterListMovies(requireContext(),list.data,this)
+                rvRomance.adapter=adapterListMovies(requireContext(),list.data,this)
+                rvTerror.adapter=adapterListMovies(requireContext(),list.data,this)
+            }
+
+            is Resource.Loading->{
+                progressBar.visibility=View.VISIBLE
+
+            }
+
+            is Resource.Failure->{
+                Toast.makeText(requireContext(),"Error de Tipo: ${list.exception}",Toast.LENGTH_LONG)
+            }
+        }
+
 
 
     }

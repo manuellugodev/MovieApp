@@ -1,7 +1,9 @@
 package com.manuellugodev.movie.data.home
 
+import com.manuellugodev.movie.vo.Resource
+
 class interactorHome {
-    fun getMovies(): List<Movie> {
+    fun getMovies(): Resource<List<Movie>> {
 
         val movies: List<Movie>
         var movie1 = Movie().apply {
@@ -25,7 +27,7 @@ class interactorHome {
        movies = listOf(movie1, movie1, movie1, movie1, movie1, movie1, movie1, movie1)
 
 
-        return movies
+        return Resource.Success(movies)
     }
 
 

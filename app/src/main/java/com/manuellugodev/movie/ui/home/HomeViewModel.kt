@@ -12,10 +12,10 @@ class HomeViewModel(private val  interactor:interactorHome) : ViewModel() {
 
 
 
-    private val _listMovie = MutableLiveData<List<Movie>>()
+    private val _listMovie = MutableLiveData<Resource<List<Movie>>>()
 
 
-    val listMovie:LiveData<List<Movie>> =_listMovie
+    val listMovie:LiveData<Resource<List<Movie>>> =_listMovie
 
     fun getListMovie(){
 
