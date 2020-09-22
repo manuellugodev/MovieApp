@@ -7,19 +7,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.data.home.Movie
-import com.manuellugodev.movie.data.home.interactorHome
+import com.manuellugodev.movie.data.home.RepositoryHomeImpl
+import com.manuellugodev.movie.data.home.dataSource.DataSourceFirebaseImpl
 import com.manuellugodev.movie.vo.Resource
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
-    private val interactor=interactorHome()
+    private val repository=RepositoryHomeImpl(DataSourceFirebaseImpl(FirebaseFirestore.getInstance()))
 
-    private val homeViewModel by viewModels<HomeViewModel> {HomeViewModelFactory(interactor)}
+    private val homeViewModel by viewModels<HomeViewModel> {HomeViewModelFactory(repository)}
 
 
     override fun onCreateView(
@@ -27,7 +29,8 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel.listMovie.observe(viewLifecycleOwner,::updateListMovie)
+
+        attachObserve()
 
 
 
@@ -39,47 +42,120 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
         setupRecyclers();
 
-        homeViewModel.getListMovie()
+
     }
 
+    private fun attachObserve(){
+
+        homeViewModel.fetchMovieListComedy.observe(viewLifecycleOwner, Observer { listMovie->
+
+            when(listMovie){
+
+                is Resource.Success -> {
+
+                    progressBar.visibility=View.GONE
+
+                    rvComedia.adapter=adapterListMovies(requireContext(),listMovie.data,this)
+
+                }
+
+                is Resource.Loading->{
+                    progressBar.visibility=View.VISIBLE
+
+                }
+
+                is Resource.Failure->{
+                    Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
+                }
+            }
+
+        })
+
+        homeViewModel.fetchMovieListDrama.observe(viewLifecycleOwner, Observer { listMovie->
+
+            when(listMovie){
+
+                is Resource.Success -> {
+
+                    progressBar.visibility=View.GONE
+
+                    rvDrama.adapter=adapterListMovies(requireContext(),listMovie.data,this)
+
+                }
+
+                is Resource.Loading->{
+                    progressBar.visibility=View.VISIBLE
+
+                }
+
+                is Resource.Failure->{
+                    Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
+                }
+            }
+
+        })
+
+        homeViewModel.fetchMovieListHorror.observe(viewLifecycleOwner, Observer { listMovie->
+
+            when(listMovie){
+
+                is Resource.Success -> {
+
+                    progressBar.visibility=View.GONE
+
+                    rvTerror.adapter=adapterListMovies(requireContext(),listMovie.data,this)
+
+                }
+
+                is Resource.Loading->{
+                    progressBar.visibility=View.VISIBLE
+
+                }
+
+                is Resource.Failure->{
+                    Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
+                }
+            }
+
+        })
+
+        homeViewModel.fetchMovieListAction.observe(viewLifecycleOwner, Observer { listMovie->
+
+            when(listMovie){
+
+                is Resource.Success -> {
+
+                    progressBar.visibility=View.GONE
+
+                    rvAccion.adapter=adapterListMovies(requireContext(),listMovie.data,this)
+
+                }
+
+                is Resource.Loading->{
+                    progressBar.visibility=View.VISIBLE
+
+                }
+
+                is Resource.Failure->{
+                    Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
+                }
+            }
+
+        })
+
+
+    }
     private fun setupRecyclers() {
 
-        rvRecomendadas.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         rvAccion.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         rvDrama.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        rvRomance.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        rvComedia.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         rvTerror.layoutManager=LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
 
 
     }
 
-    private fun updateListMovie(list: Resource<List<Movie>>){
 
-        when(list){
-
-            is Resource.Success -> {
-                progressBar.visibility=View.GONE
-
-                rvRecomendadas.adapter=adapterListMovies(requireContext(),list.data,this)
-                rvAccion.adapter=adapterListMovies(requireContext(),list.data,this)
-                rvDrama.adapter=adapterListMovies(requireContext(),list.data,this)
-                rvRomance.adapter=adapterListMovies(requireContext(),list.data,this)
-                rvTerror.adapter=adapterListMovies(requireContext(),list.data,this)
-            }
-
-            is Resource.Loading->{
-                progressBar.visibility=View.VISIBLE
-
-            }
-
-            is Resource.Failure->{
-                Toast.makeText(requireContext(),"Error de Tipo: ${list.exception}",Toast.LENGTH_LONG)
-            }
-        }
-
-
-
-    }
 
     override fun onMovieClick(movie: Movie) {
         Toast.makeText(requireContext(),"${movie.name}",Toast.LENGTH_LONG).show()

@@ -112,28 +112,7 @@
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvRomance"
-                        android:layout_width="match_parent"
-                        android:layout_height="120dp"
-                        android:orientation="horizontal"
-                        tools:listitem="@layout/item_movie" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Recomendadas"
-                        android:textSize="@dimen/subtitleText"
-                        android:textStyle="bold" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvRecomendadas"
+                        android:id="@+id/rvComedia"
                         android:layout_width="match_parent"
                         android:layout_height="120dp"
                         android:orientation="horizontal"

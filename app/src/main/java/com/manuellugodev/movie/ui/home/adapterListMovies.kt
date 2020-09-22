@@ -29,7 +29,7 @@ class adapterListMovies(val context:Context,private val listMovie:List<Movie>,pr
             itemClickListener.onMovieClick(listMovie[position])
         }
 
-        Glide.with(context).load(listMovie[position].image).into(holder.imageMovie)
+        Glide.with(context).load(listMovie[position].ImageUrl).into(holder.imageMovie)
     }
 
     class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){

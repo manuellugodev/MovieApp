@@ -53,6 +53,14 @@ dependencies {
     //Firebase Analythics
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
 
+    //Firebase Cloud Firestore
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+
+    //Experimental
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-rc03"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
