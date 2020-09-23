@@ -8,9 +8,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.data.home.Movie
+import com.manuellugodev.movie.model.Movie
 
-class adapterListMovies(val context:Context,private val listMovie:List<Movie>,private val itemClickListener:OnMovieClickListener):RecyclerView.Adapter<adapterListMovies.MyViewHolder>() {
+class adapterListMovies(val context:Context, private val listMovie:List<Movie>, private val itemClickListener:OnMovieClickListener):RecyclerView.Adapter<adapterListMovies.MyViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -46,6 +46,6 @@ class adapterListMovies(val context:Context,private val listMovie:List<Movie>,pr
 
     interface OnMovieClickListener{
 
-        fun onMovieClick(movie:Movie)
+        fun onMovieClick(movie: Movie)
     }
 }

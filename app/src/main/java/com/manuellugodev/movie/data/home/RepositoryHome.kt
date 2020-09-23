@@ -1,5 +1,6 @@
 package com.manuellugodev.movie.data.home
 
+import com.manuellugodev.movie.model.Movie
 import com.manuellugodev.movie.vo.Resource
 
 interface RepositoryHome {

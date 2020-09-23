@@ -2,13 +2,9 @@ package com.manuellugodev.movie.ui.home
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.manuellugodev.movie.data.home.Movie
 import com.manuellugodev.movie.data.home.RepositoryHome
 import com.manuellugodev.movie.vo.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeViewModel(private val  repository:RepositoryHome) : ViewModel() {
 

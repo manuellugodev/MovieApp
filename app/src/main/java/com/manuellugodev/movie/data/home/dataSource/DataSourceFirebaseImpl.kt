@@ -1,8 +1,7 @@
 package com.manuellugodev.movie.data.home.dataSource
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.manuellugodev.movie.data.home.Movie
+import com.manuellugodev.movie.model.Movie
 import com.manuellugodev.movie.vo.Resource
 import kotlinx.coroutines.tasks.await
 
