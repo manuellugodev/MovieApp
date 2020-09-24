@@ -1,9 +1,8 @@
-package com.manuellugodev.movie.ui.Login
+package com.manuellugodev.movie.ui.login
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.manuellugodev.movie.data.Login.LoginRepository
-import com.manuellugodev.movie.vo.Resource
+import com.manuellugodev.movie.data.login.LoginRepository
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,7 +21,7 @@ class LoginViewModel(private val repository: LoginRepository):ViewModel() {
             _resultLoginUser.value=ResultLogin.Loading()
 
             try {
-                
+
                 withContext(Dispatchers.IO) {
                    val  name=repository.LoginWithEmailAndPassword(email, password)
                     _resultLoginUser.postValue(name)

@@ -1,9 +1,8 @@
-package com.manuellugodev.movie.data.Login
+package com.manuellugodev.movie.data.login
 
 import com.google.firebase.auth.FirebaseAuth
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.coroutines.tasks.await
-import kotlin.coroutines.coroutineContext
 
 
 class DataSourceLoginFirebaseImpl(private val auth:FirebaseAuth) : DataSourceLoginFirebase{

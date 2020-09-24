@@ -1,23 +1,19 @@
-package com.manuellugodev.movie.ui.Login
+package com.manuellugodev.movie.ui.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.observe
 import com.google.firebase.auth.FirebaseAuth
 import com.manuellugodev.movie.MainActivity
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.data.Login.DataSourceLoginFirebaseImpl
-import com.manuellugodev.movie.data.Login.LoginRepositoryImpl
-import com.manuellugodev.movie.data.home.dataSource.DataSourceFirebaseImpl
+import com.manuellugodev.movie.data.login.DataSourceLoginFirebaseImpl
+import com.manuellugodev.movie.data.login.LoginRepositoryImpl
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class LoginActivity:AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.manuellugodev.movie.data.Login
+package com.manuellugodev.movie.data.login
 
 import com.manuellugodev.movie.vo.ResultLogin
 
