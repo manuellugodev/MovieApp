@@ -29,7 +29,7 @@ class adapterListMovies(val context:Context, private val listMovie:List<Movie>, 
             itemClickListener.onMovieClick(listMovie[position])
         }
 
-        Glide.with(context).load(listMovie[position].ImageUrl).into(holder.imageMovie)
+        Glide.with(context).load("https://image.tmdb.org/t/p/w500/${listMovie[position].image}").centerCrop().into(holder.imageMovie)
     }
 
     class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){

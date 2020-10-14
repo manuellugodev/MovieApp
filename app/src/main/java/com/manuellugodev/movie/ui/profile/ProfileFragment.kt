@@ -10,10 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.firebase.firestore.FirebaseFirestore
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.data.profile.DataSourceProfileFirebase
 import com.manuellugodev.movie.data.profile.DataSourceProfileFirebaseImpl
 import com.manuellugodev.movie.data.profile.RepositoryProfileImpl
-import com.manuellugodev.movie.vo.Resource
+import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
@@ -41,9 +40,9 @@ class ProfileFragment : Fragment() {
 
             when(result){
 
-                is Resource.Loading ->
+                is DataResult.Loading ->
                     showProgress()
-                is Resource.Success ->{
+                is DataResult.Success ->{
                     val profile=result.data
                     hideProgress()
                     txtNameProfile.text="${profile.name} ${profile.lastname}"
@@ -52,7 +51,7 @@ class ProfileFragment : Fragment() {
                     textPreferences.text=profile.preferences
                 }
 
-                is Resource.Failure ->{
+                is DataResult.Failure ->{
                     hideProgress()
                     showMessage(result.exception.message.toString())
                 }

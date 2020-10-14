@@ -6,21 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.model.Movie
-import com.manuellugodev.movie.data.home.RepositoryHomeImpl
-import com.manuellugodev.movie.data.home.dataSource.DataSourceFirebaseImpl
-import com.manuellugodev.movie.vo.Resource
+import com.manuellugodev.movie.data.home.RepositoryHome
+import com.manuellugodev.movie.data.home.dataSource.DataSourceMovieDbImpl
+import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
-    private val repository=RepositoryHomeImpl(DataSourceFirebaseImpl(FirebaseFirestore.getInstance()))
+    private val dataSource=DataSourceMovieDbImpl()
+
+    private val repository=RepositoryHome(dataSource)
 
     private val homeViewModel by viewModels<HomeViewModel> {HomeViewModelFactory(repository)}
 
@@ -36,6 +36,7 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
 
         return inflater.inflate(R.layout.fragment_home, container, false)
+        
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +53,7 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
             when(listMovie){
 
-                is Resource.Success -> {
+                is DataResult.Success -> {
 
                     progressBar.visibility=View.GONE
 
@@ -60,23 +61,23 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
                 }
 
-                is Resource.Loading->{
+                is DataResult.Loading->{
                     progressBar.visibility=View.VISIBLE
 
                 }
 
-                is Resource.Failure->{
+                is DataResult.Failure->{
                     Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
                 }
             }
 
         })
 
-        homeViewModel.fetchMovieListDrama.observe(viewLifecycleOwner, Observer { listMovie->
+       /* homeViewModel.fetchMovieListDrama.observe(viewLifecycleOwner, Observer { listMovie->
 
             when(listMovie){
 
-                is Resource.Success -> {
+                is DataResult.Success -> {
 
                     progressBar.visibility=View.GONE
 
@@ -84,12 +85,12 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
                 }
 
-                is Resource.Loading->{
+                is DataResult.Loading->{
                     progressBar.visibility=View.VISIBLE
 
                 }
 
-                is Resource.Failure->{
+                is DataResult.Failure->{
                     Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
                 }
             }
@@ -100,7 +101,7 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
             when(listMovie){
 
-                is Resource.Success -> {
+                is DataResult.Success -> {
 
                     progressBar.visibility=View.GONE
 
@@ -108,12 +109,12 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
                 }
 
-                is Resource.Loading->{
+                is DataResult.Loading->{
                     progressBar.visibility=View.VISIBLE
 
                 }
 
-                is Resource.Failure->{
+                is DataResult.Failure->{
                     Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
                 }
             }
@@ -124,7 +125,7 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
             when(listMovie){
 
-                is Resource.Success -> {
+                is DataResult.Success -> {
 
                     progressBar.visibility=View.GONE
 
@@ -132,17 +133,17 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
                 }
 
-                is Resource.Loading->{
+                is DataResult.Loading->{
                     progressBar.visibility=View.VISIBLE
 
                 }
 
-                is Resource.Failure->{
+                is DataResult.Failure->{
                     Toast.makeText(requireContext(),"Error de Tipo: ${listMovie.exception}",Toast.LENGTH_LONG)
                 }
             }
 
-        })
+        })*/
 
 
     }
@@ -159,6 +160,6 @@ class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
 
     override fun onMovieClick(movie: Movie) {
-        Toast.makeText(requireContext(),"${movie.name}",Toast.LENGTH_LONG).show()
+        Toast.makeText(requireContext(),"${movie.title}",Toast.LENGTH_LONG).show()
     }
 }

@@ -14,3 +14,4 @@ google-services.json
 .externalNativeBuild
 .cxx
 .jpg
+/gradle.properties
