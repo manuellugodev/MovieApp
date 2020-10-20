@@ -10,15 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.model.Movie
+import com.manuellugodev.movie.domain.model.Movie
 import com.manuellugodev.movie.data.home.RepositoryHome
-import com.manuellugodev.movie.data.home.dataSource.DataSourceMovieDbImpl
+import com.manuellugodev.movie.retrofit.sources.DataSourceMovieDbImpl
 import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
-    private val dataSource=DataSourceMovieDbImpl()
+    private val dataSource=
+        DataSourceMovieDbImpl()
 
     private val repository=RepositoryHome(dataSource)
 

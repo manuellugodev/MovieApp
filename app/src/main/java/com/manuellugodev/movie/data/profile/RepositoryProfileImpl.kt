@@ -1,6 +1,6 @@
 package com.manuellugodev.movie.data.profile
 
-import com.manuellugodev.movie.model.User
+import com.manuellugodev.movie.domain.model.User
 import com.manuellugodev.movie.vo.DataResult
 
 class RepositoryProfileImpl(private val dataSource:DataSourceProfileFirebase):RepositoryProfile {

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.model.Movie
+import com.manuellugodev.movie.domain.model.Movie
 
 class adapterListMovies(val context:Context, private val listMovie:List<Movie>, private val itemClickListener:OnMovieClickListener):RecyclerView.Adapter<adapterListMovies.MyViewHolder>() {
 

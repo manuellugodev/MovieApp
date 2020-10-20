@@ -2,7 +2,7 @@ package com.manuellugodev.movie.retrofit.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieImages(
+data class MovieImageResult(
     @SerializedName("id") val id:Int,
-    @SerializedName("posters") val postersList:List<ServerPostersMovie>
+    @SerializedName("posters") val listPosters:List<ServerMoviePosters>
 )

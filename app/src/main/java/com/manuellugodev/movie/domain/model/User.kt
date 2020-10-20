@@ -1,4 +1,4 @@
-package com.manuellugodev.movie.model
+package com.manuellugodev.movie.domain.model
 data class User(
     var name:String="",
     var lastname:String="",
