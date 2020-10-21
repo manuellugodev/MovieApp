@@ -13,6 +13,13 @@ import java.io.IOException
 class DataSourceMovieDbImpl(private val request: MovieRequest):
     DataSourceMovieDb {
 
+    override suspend fun getPopularListMovies(): DataResult<List<Movie>> {
+        return safeApiCall(
+            call =  {requestGetPopularListMovies()},
+            errorMessage = "Mensaje Error"
+        )
+    }
+
     override suspend fun getTopRatedListMovies(): DataResult<List<Movie>> {
        return safeApiCall(
            call = {requestGetTopRatedListMovies()},
@@ -21,7 +28,7 @@ class DataSourceMovieDbImpl(private val request: MovieRequest):
 
     private suspend fun requestGetTopRatedListMovies(): DataResult<List<Movie>> {
 
-        val response=RetrofitClient.movieClient.getTopRatedMovies(BuildConfig.MovieDbId)
+        val response=request.service.getTopRatedMovies(BuildConfig.MovieDbId)
 
         if(response.isSuccessful){
             val results=response.body()?.results
@@ -32,6 +39,21 @@ class DataSourceMovieDbImpl(private val request: MovieRequest):
         }
 
         return DataResult.Failure(IOException("Se produjo un error al obetener las peliculas"))
+    }
+
+    private suspend fun requestGetPopularListMovies(): DataResult<List<Movie>> {
+        val response=request.service.getPopularMovies(BuildConfig.MovieDbId)
+
+        if(response.isSuccessful){
+            val results=response.body()?.results
+
+            if(!results.isNullOrEmpty()){
+                return DataResult.Success(results.map { it.toDomainMovie() })
+            }
+        }
+
+        return DataResult.Failure(IOException("Se produjo un error al obetener las peliculas"))
+
     }
 }
 

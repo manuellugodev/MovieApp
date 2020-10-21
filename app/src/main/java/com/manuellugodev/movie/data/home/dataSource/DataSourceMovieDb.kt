@@ -6,4 +6,6 @@ import com.manuellugodev.movie.vo.DataResult
 interface DataSourceMovieDb {
 
     suspend fun getTopRatedListMovies():DataResult<List<Movie>>
+
+    suspend fun getPopularListMovies():DataResult<List<Movie>>
 }

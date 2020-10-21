@@ -11,19 +11,23 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.domain.model.Movie
-import com.manuellugodev.movie.data.home.RepositoryHome
+import com.manuellugodev.movie.data.home.RepositoryMovies
+import com.manuellugodev.movie.retrofit.data.requests.home.MovieRequest
 import com.manuellugodev.movie.retrofit.sources.DataSourceMovieDbImpl
+import com.manuellugodev.movie.usecases.GetTopRatedMovieUseCase
 import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(),adapterListMovies.OnMovieClickListener {
 
     private val dataSource=
-        DataSourceMovieDbImpl()
+        DataSourceMovieDbImpl(MovieRequest("https://api.themoviedb.org/3/"))
 
-    private val repository=RepositoryHome(dataSource)
+    private val repository=RepositoryMovies(dataSource)
 
-    private val homeViewModel by viewModels<HomeViewModel> {HomeViewModelFactory(repository)}
+    private val getMoviesUseCase=GetTopRatedMovieUseCase(repository)
+
+    private val homeViewModel by viewModels<HomeViewModel> {HomeViewModelFactory(getMoviesUseCase)}
 
 
     override fun onCreateView(

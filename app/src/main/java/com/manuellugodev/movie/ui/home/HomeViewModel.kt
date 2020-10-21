@@ -2,11 +2,12 @@ package com.manuellugodev.movie.ui.home
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.manuellugodev.movie.data.home.RepositoryHome
+import com.manuellugodev.movie.data.home.RepositoryMovies
+import com.manuellugodev.movie.usecases.GetTopRatedMovieUseCase
 import com.manuellugodev.movie.vo.DataResult
 import kotlinx.coroutines.Dispatchers
 
-class HomeViewModel(private val  repository:RepositoryHome) : ViewModel() {
+class HomeViewModel(private val  getTopRatedMovieUseCase: GetTopRatedMovieUseCase) : ViewModel() {
 
 /*
     val fetchMovieListComedy= liveData (Dispatchers.IO){
@@ -67,11 +68,12 @@ class HomeViewModel(private val  repository:RepositoryHome) : ViewModel() {
     }
 */
 
-    val fetchMovieListComedy= liveData (Dispatchers.IO){
+    val fetchMovieListComedy= liveData {
 
         emit(DataResult.Loading())
         try {
-            val value=repository.getMoviesPrincipal()
+
+           val value=getTopRatedMovieUseCase.invoke()
 
             emit(value)
         }catch (e:Exception){
@@ -87,8 +89,10 @@ class HomeViewModel(private val  repository:RepositoryHome) : ViewModel() {
 
 }
 
-class HomeViewModelFactory(val repository: RepositoryHome):ViewModelProvider.Factory{
+class HomeViewModelFactory(private val useCase: GetTopRatedMovieUseCase):ViewModelProvider.Factory{
+
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-       return modelClass.getConstructor(RepositoryHome::class.java).newInstance(repository)
+
+       return modelClass.getConstructor(GetTopRatedMovieUseCase::class.java).newInstance(useCase)
     }
 }
