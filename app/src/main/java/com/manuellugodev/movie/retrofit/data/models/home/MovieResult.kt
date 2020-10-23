@@ -9,4 +9,5 @@ data class MovieResult (
     val results: List<ServerMovie>,
     @SerializedName("total_pages") val totalPages:Int,
     @SerializedName("total_results") val totalResults:Int
+
 )

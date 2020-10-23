@@ -10,52 +10,71 @@ import com.manuellugodev.movie.retrofit.data.requests.movieDetail.MovieDetailReq
 import com.manuellugodev.movie.vo.DataResult
 import com.manuellugodev.movie.vo.safeApiCall
 
-class SourceMovieDetailImplRetrofit(private val request:MovieDetailRequest):SourceMovieDetail {
+class SourceMovieDetailImplRetrofit(private val request: MovieDetailRequest) : SourceMovieDetail {
 
 
     override suspend fun getMovieDetailById(id: Int): DataResult<MovieDetail> {
-        return safeApiCall(call = {requestGetMovieDetailById(id)}, errorMessage = "Mensaje de Error")
+        return safeApiCall(
+            call = { requestGetMovieDetailById(id) },
+            errorMessage = "Mensaje de Error"
+        )
     }
 
     override suspend fun getMovieImagesPostersDetailById(id: Int): DataResult<List<MoviePosters>> {
-        return safeApiCall(call = {requestGetImagesDetailById(id)},errorMessage = "Mensae de Error")
+        return safeApiCall(
+            call = { requestGetImagesDetailById(id) },
+            errorMessage = "Mensae de Error"
+        )
     }
 
 
-   private suspend fun requestGetMovieDetailById(id: Int): DataResult<MovieDetail> {
+    private suspend fun requestGetMovieDetailById(id: Int): DataResult<MovieDetail> {
 
-        val response=request.service.getMovieDetailById(id,BuildConfig.MovieDbId)
+        val response = request.service.getMovieDetailById(id, BuildConfig.MovieDbId)
 
-        if(response.isSuccessful){
+        if (response.isSuccessful) {
             val result = response.body()
 
-            if(result!=null){
+            if (result != null) {
                 return DataResult.Success(result.toDomainMovieDetail())
             }
         }
 
-       return DataResult.Failure(Exception("Error con los detalles de la pelicula"))
+        return DataResult.Failure(Exception("Error con los detalles de la pelicula"))
 
     }
 
-    private suspend fun requestGetImagesDetailById(id:Int):DataResult<List<MoviePosters>>{
+    private suspend fun requestGetImagesDetailById(id: Int): DataResult<List<MoviePosters>> {
 
-        val response=request.service.getImagesMovieDetailById(id,BuildConfig.MovieDbId)
+        val response = request.service.getImagesMovieDetailById(id, BuildConfig.MovieDbId)
 
-        if(response.isSuccessful){
+        if (response.isSuccessful) {
             val result = response.body()?.listPosters
 
-            if(result!=null){
+            if (result != null) {
                 return DataResult.Success(result.map { it.toDomainMoviePosters() })
             }
         }
 
         return DataResult.Failure(Exception("Error con los detalles de la pelicula"))
 
-}
+    }
 
 }
 
-fun MovieDetailResult.toDomainMovieDetail():MovieDetail = MovieDetail(id,title,duration, listOf())
+fun MovieDetailResult.toDomainMovieDetail(): MovieDetail = MovieDetail(
+    id,
+    title,
+    overview,
+    poster,
+    backdrop,
+    duration,
+    listOf(),
+    releaseDate,
+    popularity,
+    voteAverage,
+    status
+)
 
-fun ServerMoviePosters.toDomainMoviePosters():MoviePosters= MoviePosters(filePathImage, voteAverage)
+fun ServerMoviePosters.toDomainMoviePosters(): MoviePosters =
+    MoviePosters(filePathImage, voteAverage)
