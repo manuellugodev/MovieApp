@@ -56,7 +56,7 @@ class HomeViewModel(
 
 
         }*/
-    val fetchMovieListAction = liveData {
+    val fetchMoviePopularList = liveData {
 
         emit(DataResult.Loading())
         try {

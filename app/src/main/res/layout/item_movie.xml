@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/coverMovie"
-        android:layout_width="80dp"
-        android:layout_height="100dp"
+        android:layout_width="164dp"
+        android:layout_height="227dp"
         android:scaleType="centerCrop"
         app:srcCompat="@drawable/scn2portada"
         tools:layout_editor_absoluteX="16dp"
