@@ -139,6 +139,6 @@ class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener {
 
         bundle.putInt("IDMOVIE", movie.id)
 
-        findNavController().navigate(R.id.movieDetailFragment, bundle)
+        findNavController().navigate(R.id.action_navigation_home_to_movieDetailFragment, bundle)
     }
 }

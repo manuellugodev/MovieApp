@@ -5,8 +5,13 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="2dp"
-    android:background="@color/background_movie_item">
+   >
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp">
     <ImageView
         android:id="@+id/coverMovie"
         android:layout_width="164dp"
@@ -15,4 +20,6 @@
         app:srcCompat="@drawable/scn2portada"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
+
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
