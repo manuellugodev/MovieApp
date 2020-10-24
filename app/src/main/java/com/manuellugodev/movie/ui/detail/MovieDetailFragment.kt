@@ -19,6 +19,7 @@ import com.manuellugodev.movie.usecases.GetMovieDetailByIdUseCase
 import com.manuellugodev.movie.usecases.GetMovieImagesByIdUseCase
 import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import java.lang.StringBuilder
 
 
 class MovieDetailFragment : Fragment() {
@@ -76,22 +77,39 @@ class MovieDetailFragment : Fragment() {
 
         when(movie){
 
-            is DataResult.Loading->{Toast.makeText(requireContext(),"Cargando...",Toast.LENGTH_LONG).show()}
+            is DataResult.Loading->{
+               progressMovieDetail.visibility=View.VISIBLE
+                ScrollMovieDetail.visibility=View.INVISIBLE
+            }
 
             is DataResult.Success->{
+
+                progressMovieDetail.visibility=View.GONE
+                ScrollMovieDetail.visibility=View.VISIBLE
                 val movieData=movie.data
+                val listGenres:StringBuilder= StringBuilder()
+                 movieData.genres.map { listGenres.append("-${it.name}") }
+
+                Glide.with(requireContext()).load("https://image.tmdb.org/t/p/w1280/${movieData.backdrop}").centerCrop().into(fondo)
+
 
                 movieTitle.text=movieData.title
-                movieDuration.text=movieData.duration.toString()
-                movieGenres.text=movieData.toString()
+                movieStatus.text=movieData.status
+                movieAverage.text=movieData.voteAverage.toString()
+                movieSypnosis.text=movieData.overview
+                movieDuration.text=movieData.duration.toString() + " m"
+                movieGenres.text=listGenres.toString()
+                movieDate.text=movieData.releaseDate
 
-                Glide.with(requireContext()).load("https://image.tmdb.org/t/p/w500/${movieData.backdrop}").centerCrop().into(fondo)
+
 
 
 
             }
 
-            is DataResult.Failure->{}
+            is DataResult.Failure->{
+                progressMovieDetail.visibility=View.GONE
+            }
         }
 
     }

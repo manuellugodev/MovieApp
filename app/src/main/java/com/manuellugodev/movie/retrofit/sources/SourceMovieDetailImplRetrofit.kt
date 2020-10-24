@@ -2,9 +2,11 @@ package com.manuellugodev.movie.retrofit.sources
 
 import com.manuellugodev.movie.BuildConfig
 import com.manuellugodev.movie.data.detail.SourceMovieDetail
+import com.manuellugodev.movie.domain.model.Genres
 import com.manuellugodev.movie.domain.model.MovieDetail
 import com.manuellugodev.movie.domain.model.MoviePosters
 import com.manuellugodev.movie.retrofit.data.models.MovieDetailResult
+import com.manuellugodev.movie.retrofit.data.models.ServerGenres
 import com.manuellugodev.movie.retrofit.data.models.ServerMoviePosters
 import com.manuellugodev.movie.retrofit.data.requests.movieDetail.MovieDetailRequest
 import com.manuellugodev.movie.vo.DataResult
@@ -69,12 +71,15 @@ fun MovieDetailResult.toDomainMovieDetail(): MovieDetail = MovieDetail(
     poster,
     backdrop,
     duration,
-    listOf(),
+    genres.map { genres-> genres.toDomainGenres() },
     releaseDate,
     popularity,
     voteAverage,
     status
 )
+
+fun ServerGenres.toDomainGenres():Genres =
+    Genres(idGenre,nameGenre)
 
 fun ServerMoviePosters.toDomainMoviePosters(): MoviePosters =
     MoviePosters(filePathImage, voteAverage)

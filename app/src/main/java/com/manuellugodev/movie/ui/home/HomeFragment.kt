@@ -133,8 +133,6 @@ class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener {
 
 
     override fun onMovieClick(movie: Movie) {
-        Toast.makeText(requireContext(), "${movie.title}", Toast.LENGTH_LONG).show()
-
         val bundle = Bundle()
 
         bundle.putInt("IDMOVIE", movie.id)
