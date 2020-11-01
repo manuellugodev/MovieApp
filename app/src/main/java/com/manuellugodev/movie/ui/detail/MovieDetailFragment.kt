@@ -5,16 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.data.detail.RepositoryMovieDetail
 import com.manuellugodev.movie.domain.model.MovieDetail
 import com.manuellugodev.movie.retrofit.data.requests.movieDetail.MovieDetailRequest
-import com.manuellugodev.movie.retrofit.sources.SourceMovieDetailImplRetrofit
+import com.manuellugodev.movie.retrofit.sources.RemoteSourceMovieDetail
 import com.manuellugodev.movie.usecases.GetMovieDetailByIdUseCase
 import com.manuellugodev.movie.usecases.GetMovieImagesByIdUseCase
 import com.manuellugodev.movie.vo.DataResult
@@ -30,7 +28,7 @@ class MovieDetailFragment : Fragment() {
 
 
     private val sourceMovieDetail =
-        SourceMovieDetailImplRetrofit(MovieDetailRequest(("https://api.themoviedb.org/3/")))
+        RemoteSourceMovieDetail(MovieDetailRequest(("https://api.themoviedb.org/3/")))
     private val repository = RepositoryMovieDetail(sourceMovieDetail)
 
     private val getMovieDetailByIdUseCase = GetMovieDetailByIdUseCase(repository)

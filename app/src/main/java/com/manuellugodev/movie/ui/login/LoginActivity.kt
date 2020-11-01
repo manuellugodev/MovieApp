@@ -10,16 +10,16 @@ import androidx.lifecycle.observe
 import com.google.firebase.auth.FirebaseAuth
 import com.manuellugodev.movie.MainActivity
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.data.login.DataSourceLoginFirebaseImpl
-import com.manuellugodev.movie.data.login.LoginRepositoryImpl
+import com.manuellugodev.movie.data.login.RepositoryLogin
+import com.manuellugodev.movie.firebase.sources.DataSourceLoginFirebase
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity:AppCompatActivity() {
 
     private val firebaseAuth=FirebaseAuth.getInstance()
-    private val dataSource=DataSourceLoginFirebaseImpl(firebaseAuth)
-    private val repository=LoginRepositoryImpl(dataSource)
+    private val dataSource= DataSourceLoginFirebase(firebaseAuth)
+    private val repository=RepositoryLogin(dataSource)
 
     private val loginViewModel by  viewModels<LoginViewModel> {LoginViewModelFactory(repository) }
 

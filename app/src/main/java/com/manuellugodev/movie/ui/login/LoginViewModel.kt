@@ -2,13 +2,13 @@ package com.manuellugodev.movie.ui.login
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.manuellugodev.movie.data.login.LoginRepository
+import com.manuellugodev.movie.data.login.RepositoryLogin
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginViewModel(private val repository: LoginRepository):ViewModel() {
+class LoginViewModel(private val repository: RepositoryLogin):ViewModel() {
 
     private val _resultLoginUser:MutableLiveData<ResultLogin<String>> = MutableLiveData()
 

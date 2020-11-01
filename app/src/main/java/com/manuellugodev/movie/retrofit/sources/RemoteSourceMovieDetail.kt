@@ -1,7 +1,7 @@
 package com.manuellugodev.movie.retrofit.sources
 
 import com.manuellugodev.movie.BuildConfig
-import com.manuellugodev.movie.data.detail.SourceMovieDetail
+import com.manuellugodev.movie.data.detail.DataSourceMovieDetail
 import com.manuellugodev.movie.domain.model.Genres
 import com.manuellugodev.movie.domain.model.MovieDetail
 import com.manuellugodev.movie.domain.model.MoviePosters
@@ -12,7 +12,7 @@ import com.manuellugodev.movie.retrofit.data.requests.movieDetail.MovieDetailReq
 import com.manuellugodev.movie.vo.DataResult
 import com.manuellugodev.movie.vo.safeApiCall
 
-class SourceMovieDetailImplRetrofit(private val request: MovieDetailRequest) : SourceMovieDetail {
+class RemoteSourceMovieDetail(private val request: MovieDetailRequest) : DataSourceMovieDetail {
 
 
     override suspend fun getMovieDetailById(id: Int): DataResult<MovieDetail> {

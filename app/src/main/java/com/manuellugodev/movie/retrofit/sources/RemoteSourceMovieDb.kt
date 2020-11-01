@@ -4,13 +4,12 @@ import com.example.android.frameworkretrofit.data.models.movie.ServerMovie
 import com.manuellugodev.movie.BuildConfig
 import com.manuellugodev.movie.data.home.dataSource.DataSourceMovieDb
 import com.manuellugodev.movie.domain.model.Movie
-import com.manuellugodev.movie.retrofit.RetrofitClient
 import com.manuellugodev.movie.retrofit.data.requests.home.MovieRequest
 import com.manuellugodev.movie.vo.DataResult
 import com.manuellugodev.movie.vo.safeApiCall
 import java.io.IOException
 
-class DataSourceMovieDbImpl(private val request: MovieRequest):
+class RemoteSourceMovieDb(private val request: MovieRequest):
     DataSourceMovieDb {
 
     override suspend fun getPopularListMovies(): DataResult<List<Movie>> {

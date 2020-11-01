@@ -10,16 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.firebase.firestore.FirebaseFirestore
 import com.manuellugodev.movie.R
-import com.manuellugodev.movie.data.profile.DataSourceProfileFirebaseImpl
-import com.manuellugodev.movie.data.profile.RepositoryProfileImpl
+import com.manuellugodev.movie.data.profile.RepositoryProfile
+import com.manuellugodev.movie.firebase.sources.DataSourceProfileFirebase
 import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
     val db=FirebaseFirestore.getInstance()
-    val dataSource= DataSourceProfileFirebaseImpl(db)
-    val repository=RepositoryProfileImpl(dataSource)
+    val dataSource= DataSourceProfileFirebase(db)
+    val repository=RepositoryProfile(dataSource)
 
     private val profileViewModel by viewModels<ProfileViewModel> { ProfileViewModelFactory(repository) }
 

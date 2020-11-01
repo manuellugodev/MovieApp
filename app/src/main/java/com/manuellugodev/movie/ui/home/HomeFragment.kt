@@ -1,5 +1,6 @@
 package com.manuellugodev.movie.ui.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,34 +11,56 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.manuellugodev.movie.MovieApplication
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.domain.model.Movie
 import com.manuellugodev.movie.data.home.RepositoryMovies
 import com.manuellugodev.movie.retrofit.data.requests.home.MovieRequest
-import com.manuellugodev.movie.retrofit.sources.DataSourceMovieDbImpl
+import com.manuellugodev.movie.retrofit.sources.RemoteSourceMovieDb
 import com.manuellugodev.movie.usecases.GetPopularMovieUseCase
 import com.manuellugodev.movie.usecases.GetTopRatedMovieUseCase
 import com.manuellugodev.movie.vo.DataResult
 import kotlinx.android.synthetic.main.fragment_home.*
+import javax.inject.Inject
 
-class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener {
+class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener{
 
-    private val dataSource =
-        DataSourceMovieDbImpl(MovieRequest("https://api.themoviedb.org/3/"))
+
+
+
+   /* private val dataSource =
+        RemoteSourceMovieDb(MovieRequest("https://api.themoviedb.org/3/"))
 
     private val repository = RepositoryMovies(dataSource)
 
     private val getTopRatedMoviesUseCase = GetTopRatedMovieUseCase(repository)
 
-    private val getPopularMovieUseCase = GetPopularMovieUseCase(repository)
+    private val getPopularMovieUseCase = GetPopularMovieUseCase(repository)*/
+
+    @Inject
+    lateinit var  getTopRatedMovieUseCase: GetTopRatedMovieUseCase
+
+    @Inject
+    lateinit var getPopularMovieUseCase: GetPopularMovieUseCase
+
 
     private val homeViewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory(
-            getTopRatedMoviesUseCase,
+            getTopRatedMovieUseCase,
             getPopularMovieUseCase
         )
     }
 
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+
+        (activity?.applicationContext as MovieApplication).appComponent.inject(this)
+
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

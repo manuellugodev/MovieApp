@@ -4,7 +4,7 @@ import com.manuellugodev.movie.domain.model.MovieDetail
 import com.manuellugodev.movie.domain.model.MoviePosters
 import com.manuellugodev.movie.vo.DataResult
 
-interface SourceMovieDetail {
+interface DataSourceMovieDetail {
 
     suspend fun getMovieDetailById(id: Int):DataResult<MovieDetail>
 
