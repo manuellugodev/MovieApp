@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 
-def MOVIE_DB_API_KEY= '"' + MovieDbId + '"'?:'"Not Found Api Key'
-def STRING ='String'
+def MOVIE_DB_API_KEY = '"' + MovieDbId + '"' ?: '"Not Found Api Key'
+def STRING = 'String'
 
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+
+    viewBinding { enabled = true }
 
     defaultConfig {
         applicationId "com.manuellugodev.movie"
@@ -21,8 +22,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        each{
-           type ->  type.buildConfigField STRING,'MovieDbId',MOVIE_DB_API_KEY
+        each {
+            type -> type.buildConfigField STRING, 'MovieDbId', MOVIE_DB_API_KEY
         }
 
 

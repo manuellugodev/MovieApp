@@ -6,7 +6,7 @@ import com.manuellugodev.movie.vo.DataResult
 
 class GetMovieDetailByIdUseCase(private val repository: RepositoryMovieDetail) {
 
-    suspend fun invoke(idMovie:Int):DataResult<MovieDetail> =
+    suspend operator fun invoke(idMovie:Int):DataResult<MovieDetail> =
         repository.getMovieDetail(idMovie)
 
 }

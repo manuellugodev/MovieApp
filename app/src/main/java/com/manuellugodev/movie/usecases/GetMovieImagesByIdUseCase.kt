@@ -7,7 +7,7 @@ import com.manuellugodev.movie.vo.DataResult
 
 class GetMovieImagesByIdUseCase(private val repository:RepositoryMovieDetail) {
 
-    suspend fun invoke(idMovie:Int): DataResult<List<MoviePosters>> {
+    suspend operator fun invoke(idMovie:Int): DataResult<List<MoviePosters>> {
 
         return repository.getMovieImagePosters(idMovie)
     }

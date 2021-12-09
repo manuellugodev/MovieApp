@@ -1,6 +1,5 @@
 package com.manuellugodev.movie.ui.home
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,37 +7,25 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.manuellugodev.movie.MovieApplication
 import com.manuellugodev.movie.R
+import com.manuellugodev.movie.databinding.FragmentHomeBinding
 import com.manuellugodev.movie.domain.model.Movie
-import com.manuellugodev.movie.data.home.RepositoryMovies
-import com.manuellugodev.movie.retrofit.data.requests.home.MovieRequest
-import com.manuellugodev.movie.retrofit.sources.RemoteSourceMovieDb
 import com.manuellugodev.movie.usecases.GetPopularMovieUseCase
 import com.manuellugodev.movie.usecases.GetTopRatedMovieUseCase
 import com.manuellugodev.movie.vo.DataResult
-import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
-class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener{
+class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener {
 
-
-
-
-   /* private val dataSource =
-        RemoteSourceMovieDb(MovieRequest("https://api.themoviedb.org/3/"))
-
-    private val repository = RepositoryMovies(dataSource)
-
-    private val getTopRatedMoviesUseCase = GetTopRatedMovieUseCase(repository)
-
-    private val getPopularMovieUseCase = GetPopularMovieUseCase(repository)*/
+    private var _bindingHome: FragmentHomeBinding? = null
+    private val bindingHome get() = _bindingHome!!
 
     @Inject
-    lateinit var  getTopRatedMovieUseCase: GetTopRatedMovieUseCase
+    lateinit var getTopRatedMovieUseCase: GetTopRatedMovieUseCase
 
     @Inject
     lateinit var getPopularMovieUseCase: GetPopularMovieUseCase
@@ -52,14 +39,9 @@ class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener{
     }
 
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?){
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         (activity?.applicationContext as MovieApplication).appComponent.inject(this)
-
-
     }
 
     override fun onCreateView(
@@ -67,93 +49,51 @@ class HomeFragment : Fragment(), adapterListMovies.OnMovieClickListener{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         attachObserve()
 
-
-
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _bindingHome= FragmentHomeBinding.inflate(inflater,container,false)
+        return bindingHome.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupRecyclers();
-
-
     }
 
     private fun attachObserve() {
-
-    /*    homeViewModel.fetchMovieListComedy.observe(viewLifecycleOwner, Observer { listMovie ->
-
-            when (listMovie) {
-
-                is DataResult.Success -> {
-
-                    progressBar.visibility = View.GONE
-
-                    rvComedia.adapter = adapterListMovies(requireContext(), listMovie.data, this)
-
-                }
-
-                is DataResult.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-
-                }
-
-                is DataResult.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error de Tipo: ${listMovie.exception}",
-                        Toast.LENGTH_LONG
-                    )
-                }
-            }
-
-        })*/
-
-
-        homeViewModel.fetchMoviePopularList.observe(viewLifecycleOwner, Observer { listMovie ->
-
-            when (listMovie) {
-
-                is DataResult.Success -> {
-
-                    progressBar.visibility = View.GONE
-
-                    rvHome.adapter = adapterListMovies(requireContext(), listMovie.data, this)
-
-                }
-
-                is DataResult.Loading -> {
-                    progressBar.visibility = View.VISIBLE
-
-                }
-
-                is DataResult.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Error de Tipo: ${listMovie.exception}",
-                        Toast.LENGTH_LONG
-                    )
-                }
-            }
-
-        })
-
-
+        homeViewModel.fetchMoviePopularList.observe(viewLifecycleOwner, ::updateAdapter)
     }
 
     private fun setupRecyclers() {
-
-        rvHome.layoutManager =
+        bindingHome.rvHome.layoutManager =
             GridLayoutManager(requireContext(), 2)
-
-
     }
 
+    private fun updateAdapter(listMovie: DataResult<List<Movie>>) {
+        when (listMovie) {
+            is DataResult.Success -> {
+                hideProgress()
+                bindingHome.rvHome.adapter = adapterListMovies(requireContext(), listMovie.data, this)
+            }
+            is DataResult.Loading -> {
+                showProgress()
+            }
+            is DataResult.Failure -> {
+                showError("Error de Tipo: ${listMovie.exception}")
+            }
+        }
+    }
+
+    private fun showProgress(){
+        bindingHome.progressBar.visibility=View.VISIBLE
+    }
+    private fun hideProgress(){
+        bindingHome.progressBar.visibility=View.GONE
+    }
+    private fun showError(messageError:String){
+        Toast.makeText(requireContext(), messageError, Toast.LENGTH_LONG).show()
+    }
 
     override fun onMovieClick(movie: Movie) {
         val bundle = Bundle()

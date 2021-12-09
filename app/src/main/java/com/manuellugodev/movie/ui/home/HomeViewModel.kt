@@ -13,82 +13,27 @@ class HomeViewModel(
     private val getPopularMovieUseCase: GetPopularMovieUseCase
 ) : ViewModel() {
 
-    /*
-        val fetchMovieListComedy= liveData (Dispatchers.IO){
-
-            emit(DataResult.Loading())
-                try {
-                    val value=repository.getMoviesForCategory("Comedia")
-
-                    emit(value)
-                }catch (e:Exception){
-                    Log.e("ERROR","Error de Tipo: ${e.message}")
-                    emit(DataResult.Failure(e))
-                }
-
-
-        }
-        val fetchMovieListDrama= liveData (Dispatchers.IO){
-
-            emit(DataResult.Loading())
-            try {
-                val value=repository.getMoviesForCategory("Drama")
-
-                emit(value)
-            }catch (e:Exception){
-                Log.e("ERROR","Error de Tipo: ${e.message}")
-                emit(DataResult.Failure(e))
-            }
-
-
-        }
-        val fetchMovieListHorror= liveData (Dispatchers.IO){
-
-            emit(DataResult.Loading())
-            try {
-                val value=repository.getMoviesForCategory("Terror")
-
-                emit(value)
-            }catch (e:Exception){
-                Log.e("ERROR","Error de Tipo: ${e.message}")
-                emit(DataResult.Failure(e))
-            }
-
-
-        }*/
     val fetchMoviePopularList = liveData {
 
         emit(DataResult.Loading())
         try {
-            val value = getPopularMovieUseCase.invoke()
-
+            val value = getPopularMovieUseCase()
             emit(value)
         } catch (e: Exception) {
             Log.e("ERROR", "Error de Tipo: ${e.message}")
             emit(DataResult.Failure(e))
         }
-
-
     }
-
-
-    val fetchMovieListComedy = liveData {
-
+    val fetchMovieTopRated = liveData {
         emit(DataResult.Loading())
         try {
-
-            val value = getTopRatedMovieUseCase.invoke()
-
+            val value = getTopRatedMovieUseCase()
             emit(value)
         } catch (e: Exception) {
             Log.e("ERROR", "Error de Tipo: ${e.message}")
             emit(DataResult.Failure(e))
         }
-
-
     }
-
-
 }
 
 class HomeViewModelFactory(

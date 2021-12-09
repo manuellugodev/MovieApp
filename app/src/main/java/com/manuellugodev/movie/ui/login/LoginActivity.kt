@@ -9,11 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import com.google.firebase.auth.FirebaseAuth
 import com.manuellugodev.movie.MainActivity
-import com.manuellugodev.movie.R
 import com.manuellugodev.movie.data.login.RepositoryLogin
+import com.manuellugodev.movie.databinding.ActivityLoginBinding
 import com.manuellugodev.movie.firebase.sources.DataSourceLoginFirebase
 import com.manuellugodev.movie.vo.ResultLogin
-import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity:AppCompatActivity() {
 
@@ -23,28 +22,28 @@ class LoginActivity:AppCompatActivity() {
 
     private val loginViewModel by  viewModels<LoginViewModel> {LoginViewModelFactory(repository) }
 
+    private lateinit var bindingLogin: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-
+        bindingLogin= ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(bindingLogin.root)
 
         loginViewModel.resultLoginUser.observe(this,::updateUiLogin)
 
-        login.setOnClickListener {
+        bindingLogin.login.setOnClickListener {
             LoginEmailAndPassword()
         }
     }
 
 
     private fun LoginEmailAndPassword(){
-        var email=username.text.toString()
-        var password=password.text.toString()
+        bindingLogin.apply {
+            var email = username.text.toString()
+            var password = password.text.toString()
 
-        loginViewModel.loginWithUserAndPassword(email,password)
-
-
+            loginViewModel.loginWithUserAndPassword(email, password)
+        }
     }
 
     private fun updateUiLogin(result:ResultLogin<String>){
@@ -72,11 +71,11 @@ class LoginActivity:AppCompatActivity() {
 
 
     private fun showProgress(){
-        loading.visibility= View.VISIBLE
+        bindingLogin.loading.visibility= View.VISIBLE
     }
 
     private fun hideProgress(){
-        loading.visibility= View.GONE
+        bindingLogin.loading.visibility= View.GONE
     }
 
     private fun showMessage(message:String){

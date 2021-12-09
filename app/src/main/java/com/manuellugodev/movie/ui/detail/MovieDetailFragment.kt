@@ -8,23 +8,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
-import com.manuellugodev.movie.R
 import com.manuellugodev.movie.data.detail.RepositoryMovieDetail
+import com.manuellugodev.movie.databinding.FragmentMovieDetailBinding
 import com.manuellugodev.movie.domain.model.MovieDetail
 import com.manuellugodev.movie.retrofit.data.requests.movieDetail.MovieDetailRequest
 import com.manuellugodev.movie.retrofit.sources.RemoteSourceMovieDetail
 import com.manuellugodev.movie.usecases.GetMovieDetailByIdUseCase
 import com.manuellugodev.movie.usecases.GetMovieImagesByIdUseCase
 import com.manuellugodev.movie.vo.DataResult
-import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import java.lang.StringBuilder
 
 
 class MovieDetailFragment : Fragment() {
 
-    private var idMovie=0
 
-    private val MOVIEID="IDMOVIE"
+    private var _bindingDetail: FragmentMovieDetailBinding? = null
+    private val bindingDetail get() = _bindingDetail!!
+
+    private var idMovie = 0
+
+    private val MOVIEID = "IDMOVIE"
 
 
     private val sourceMovieDetail =
@@ -46,7 +49,7 @@ class MovieDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         requireArguments().let {
-            idMovie=it.getInt("IDMOVIE")
+            idMovie = it.getInt("IDMOVIE")
         }
 
     }
@@ -58,55 +61,51 @@ class MovieDetailFragment : Fragment() {
 
         attachObserver()
 
-        return inflater.inflate(R.layout.fragment_movie_detail, container, false)
+        _bindingDetail = FragmentMovieDetailBinding.inflate(inflater, container, false)
+        return bindingDetail.root
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun attachObserver() {
+        viewModel.fetchMovieDetail(idMovie).observe(viewLifecycleOwner, ::updateMovieDetail)
     }
 
+    private fun updateMovieDetail(movie: DataResult<MovieDetail>) {
 
-    private fun attachObserver(){
-        viewModel.fetchMovieDetail(idMovie).observe(viewLifecycleOwner,::updateMovieDetail)
-    }
+        when (movie) {
 
-    private fun updateMovieDetail(movie:DataResult<MovieDetail>){
-
-        when(movie){
-
-            is DataResult.Loading->{
-               progressMovieDetail.visibility=View.VISIBLE
-                ScrollMovieDetail.visibility=View.INVISIBLE
+            is DataResult.Loading -> {
+                bindingDetail.progressMovieDetail.visibility = View.VISIBLE
+                bindingDetail.ScrollMovieDetail.visibility = View.INVISIBLE
             }
 
-            is DataResult.Success->{
+            is DataResult.Success -> {
 
-                progressMovieDetail.visibility=View.GONE
-                ScrollMovieDetail.visibility=View.VISIBLE
-                val movieData=movie.data
-                val listGenres:StringBuilder= StringBuilder()
-                 movieData.genres.map { listGenres.append("-${it.name}") }
+                bindingDetail.progressMovieDetail.visibility = View.GONE
+                bindingDetail.ScrollMovieDetail.visibility = View.VISIBLE
+                val movieData = movie.data
+                val listGenres: StringBuilder = StringBuilder()
+                movieData.genres.map { listGenres.append("-${it.name}") }
 
-                Glide.with(requireContext()).load("https://image.tmdb.org/t/p/w1280/${movieData.backdrop}").centerCrop().into(fondo)
-
-
-                movieTitle.text=movieData.title
-                movieStatus.text=movieData.status
-                movieAverage.text=movieData.voteAverage.toString()
-                movieSypnosis.text=movieData.overview
-                movieDuration.text=movieData.duration.toString() + " m"
-                movieGenres.text=listGenres.toString()
-                movieDate.text=movieData.releaseDate
+                Glide.with(requireContext())
+                    .load("https://image.tmdb.org/t/p/w1280/${movieData.backdrop}").centerCrop()
+                    .into(bindingDetail.fondo)
 
 
-
-
+                bindingDetail.apply {
+                    movieTitle.text = movieData.title
+                    movieStatus.text = movieData.status
+                    movieAverage.text = movieData.voteAverage.toString()
+                    movieSypnosis.text = movieData.overview
+                    movieDuration.text = movieData.duration.toString() + " m"
+                    movieGenres.text = listGenres.toString()
+                    movieDate.text = movieData.releaseDate
+                }
 
             }
 
-            is DataResult.Failure->{
-                progressMovieDetail.visibility=View.GONE
+            is DataResult.Failure -> {
+                bindingDetail.progressMovieDetail.visibility = View.GONE
             }
         }
 

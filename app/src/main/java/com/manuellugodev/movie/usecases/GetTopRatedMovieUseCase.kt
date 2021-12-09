@@ -6,6 +6,6 @@ import com.manuellugodev.movie.vo.DataResult
 
 class GetTopRatedMovieUseCase(private val repository:RepositoryMovies) {
 
-    suspend fun invoke():DataResult<List<Movie>> =
+    suspend operator fun invoke():DataResult<List<Movie>> =
         repository.getTopRatedMovies()
 }

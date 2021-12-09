@@ -9,13 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.firebase.firestore.FirebaseFirestore
-import com.manuellugodev.movie.R
 import com.manuellugodev.movie.data.profile.RepositoryProfile
+import com.manuellugodev.movie.databinding.FragmentProfileBinding
 import com.manuellugodev.movie.firebase.sources.DataSourceProfileFirebase
 import com.manuellugodev.movie.vo.DataResult
-import kotlinx.android.synthetic.main.fragment_profile.*
-
 class ProfileFragment : Fragment() {
+
+
+    private var _bindingProfile: FragmentProfileBinding? = null
+    private val bindingProfile get() = _bindingProfile!!
 
     val db=FirebaseFirestore.getInstance()
     val dataSource= DataSourceProfileFirebase(db)
@@ -28,8 +30,8 @@ class ProfileFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _bindingProfile = FragmentProfileBinding.inflate(inflater,container,false)
+        return bindingProfile.root
 
     }
 
@@ -45,10 +47,13 @@ class ProfileFragment : Fragment() {
                 is DataResult.Success ->{
                     val profile=result.data
                     hideProgress()
-                    txtNameProfile.text="${profile.name} ${profile.lastname}"
-                    textEmail.text=profile.email
-                    textCountry.text=profile.country
-                    textPreferences.text=profile.preferences
+                    bindingProfile.apply {
+                        txtNameProfile.text="${profile.name} ${profile.lastname}"
+                        textEmail.text=profile.email
+                        textCountry.text=profile.country
+                        textPreferences.text=profile.preferences
+                    }
+
                 }
 
                 is DataResult.Failure ->{
@@ -63,12 +68,12 @@ class ProfileFragment : Fragment() {
 
     private fun showProgress(){
 
-        progressProfile.visibility=View.VISIBLE
+        bindingProfile.progressProfile.visibility=View.VISIBLE
     }
 
     private fun hideProgress(){
 
-        progressProfile.visibility=View.GONE
+        bindingProfile.progressProfile.visibility=View.GONE
     }
 
     private fun showMessage(message:String){
