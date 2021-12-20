@@ -10,12 +10,12 @@ import com.bumptech.glide.Glide
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.domain.model.Movie
 
-class adapterListMovies(val context:Context, private val listMovie:List<Movie>, private val itemClickListener:OnMovieClickListener):RecyclerView.Adapter<adapterListMovies.MyViewHolder>() {
+class AdapterListMovies(val context:Context, private var listMovie:List<Movie>, private val itemClickListener:OnMovieClickListener):RecyclerView.Adapter<AdapterListMovies.MyViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): adapterListMovies.MyViewHolder {
+    ): AdapterListMovies.MyViewHolder {
        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_movie,parent,false))
     }
 
@@ -23,7 +23,7 @@ class adapterListMovies(val context:Context, private val listMovie:List<Movie>, 
       return  listMovie.size
     }
 
-    override fun onBindViewHolder(holder: adapterListMovies.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AdapterListMovies.MyViewHolder, position: Int) {
         holder.imageMovie.setOnClickListener {
 
             itemClickListener.onMovieClick(listMovie[position])
@@ -47,5 +47,10 @@ class adapterListMovies(val context:Context, private val listMovie:List<Movie>, 
     interface OnMovieClickListener{
 
         fun onMovieClick(movie: Movie)
+    }
+
+    fun updateDate(movies:List<Movie>){
+        listMovie=movies
+        notifyDataSetChanged()
     }
 }

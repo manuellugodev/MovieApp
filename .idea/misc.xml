@@ -9,6 +9,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/MovieApp/app/src/main/res/layout/fragment_category.xml" value="0.25" />
+        <entry key="..\:/Users/Manuel/AndroidStudioProjects/MovieApp/app/src/main/res/layout/fragment_home.xml" value="0.2786458333333333" />
       </map>
     </option>
   </component>
