@@ -1,5 +1,6 @@
 package com.manuellugodev.movie.ui.login
 
+import android.accounts.AuthenticatorException
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,22 +15,23 @@ import com.manuellugodev.movie.databinding.ActivityLoginBinding
 import com.manuellugodev.movie.firebase.sources.DataSourceLoginFirebase
 import com.manuellugodev.movie.vo.ResultLogin
 
-class LoginActivity:AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
-    private val firebaseAuth=FirebaseAuth.getInstance()
-    private val dataSource= DataSourceLoginFirebase(firebaseAuth)
-    private val repository=RepositoryLogin(dataSource)
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val dataSource = DataSourceLoginFirebase(firebaseAuth)
+    private val repository = RepositoryLogin(dataSource)
 
-    private val loginViewModel by  viewModels<LoginViewModel> {LoginViewModelFactory(repository) }
+    private val loginViewModel by viewModels<LoginViewModel> { LoginViewModelFactory(repository) }
 
     private lateinit var bindingLogin: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindingLogin= ActivityLoginBinding.inflate(layoutInflater)
+        bindingLogin = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(bindingLogin.root)
 
-        loginViewModel.resultLoginUser.observe(this,::updateUiLogin)
+        loginViewModel.resultLoginUser.observe(this, ::updateUiLogin)
+        loginViewModel.getUser()
 
         bindingLogin.login.setOnClickListener {
             LoginEmailAndPassword()
@@ -37,7 +39,7 @@ class LoginActivity:AppCompatActivity() {
     }
 
 
-    private fun LoginEmailAndPassword(){
+    private fun LoginEmailAndPassword() {
         bindingLogin.apply {
             var email = username.text.toString()
             var password = password.text.toString()
@@ -46,9 +48,9 @@ class LoginActivity:AppCompatActivity() {
         }
     }
 
-    private fun updateUiLogin(result:ResultLogin<String>){
+    private fun updateUiLogin(result: ResultLogin<String>) {
 
-        when(result) {
+        when (result) {
 
             is ResultLogin.Success -> {
                 hideProgress()
@@ -56,30 +58,38 @@ class LoginActivity:AppCompatActivity() {
 
             }
 
-            is ResultLogin.Loading-> {
+            is ResultLogin.Loading -> {
                 showProgress()
                 showMessage("Loading...")
             }
-            
-            is ResultLogin.Failure->{
+
+            is ResultLogin.Failure -> {
+                when (result.e) {
+                    is AuthenticatorException -> {
+                        showMessage(result.e.message.toString())
+                    }
+                    else -> {
+                        showMessage("Error Tipo: ${result.e.message}")
+                    }
+                }
                 hideProgress()
-                showMessage("Error Tipo: ${result.e.message}")
+
             }
         }
 
     }
 
 
-    private fun showProgress(){
-        bindingLogin.loading.visibility= View.VISIBLE
+    private fun showProgress() {
+        bindingLogin.loading.visibility = View.VISIBLE
     }
 
-    private fun hideProgress(){
-        bindingLogin.loading.visibility= View.GONE
+    private fun hideProgress() {
+        bindingLogin.loading.visibility = View.GONE
     }
 
-    private fun showMessage(message:String){
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show()
+    private fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
 

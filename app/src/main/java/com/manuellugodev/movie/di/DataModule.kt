@@ -27,10 +27,6 @@ class DataModule {
         dataSourceMovieDetail: DataSourceMovieDetail)=
         RepositoryMovieDetail(dataSourceMovieDetail)
 
-    @Provides
-    fun repositoryProfileProvider(
-        dataSourceProfile: DataSourceProfile)=
-        RepositoryProfile(dataSourceProfile)
 
     @Provides
     fun repositoryLoginProvider(dataSourceLogin: DataSourceLogin)=

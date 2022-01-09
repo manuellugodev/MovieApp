@@ -38,4 +38,13 @@ class LoginViewModel(private val repository: RepositoryLogin):ViewModel() {
 
     }
 
+    fun getUser() {
+        viewModelScope.launch {
+            _resultLoginUser.value=ResultLogin.Loading()
+            _resultLoginUser.value=repository.getUserLogin()
+
+        }
+
+    }
+
 }

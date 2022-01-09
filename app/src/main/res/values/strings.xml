@@ -20,4 +20,8 @@
     <string name="preferences">Preference</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="alert_exit_session_message">Do you want close session?</string>
+    <string name="alert_exit_session_message_possitive">Yes</string>
+    <string name="alert_exit_session_message_negative">No</string>
 </resources>
