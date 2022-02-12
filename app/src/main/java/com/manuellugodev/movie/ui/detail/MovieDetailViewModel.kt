@@ -7,38 +7,27 @@ import com.manuellugodev.movie.usecases.GetMovieDetailByIdUseCase
 import com.manuellugodev.movie.usecases.GetMovieImagesByIdUseCase
 import com.manuellugodev.movie.vo.DataResult
 
-class MovieDetailViewModel(private val getMovieDetailByIdUseCase: GetMovieDetailByIdUseCase,
-                           private val getMovieImagesByIdUseCase: GetMovieImagesByIdUseCase) : ViewModel() {
+class MovieDetailViewModel(private val getMovieDetailByIdUseCase: GetMovieDetailByIdUseCase) :
+    ViewModel() {
 
 
-    fun fetchMovieDetail(idMovie:Int) = liveData{
+    fun fetchMovieDetail(idMovie: Int) = liveData {
 
         emit(DataResult.Loading())
 
-        val result= getMovieDetailByIdUseCase.invoke(idMovie)
+        val result = getMovieDetailByIdUseCase(idMovie)
 
         emit(result)
 
     }
-
-
-
-
-
-
 }
 
 class MovieDetailViewModelFactory(
     private val getMovieDetailByIdUseCase: GetMovieDetailByIdUseCase,
-    private val getMovieImagesByIdUseCase: GetMovieImagesByIdUseCase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(
             GetMovieDetailByIdUseCase::class.java,
-            GetMovieImagesByIdUseCase::class.java
-        ).newInstance(
-            getMovieDetailByIdUseCase,
-            getMovieImagesByIdUseCase
-        )
+        ).newInstance(getMovieDetailByIdUseCase)
     }
 }

@@ -35,12 +35,10 @@ class MovieDetailFragment : Fragment() {
     private val repository = RepositoryMovieDetail(sourceMovieDetail)
 
     private val getMovieDetailByIdUseCase = GetMovieDetailByIdUseCase(repository)
-    private val getMovieImagesByIdUseCase = GetMovieImagesByIdUseCase(repository)
 
     private val viewModel by viewModels<MovieDetailViewModel> {
         MovieDetailViewModelFactory(
-            getMovieDetailByIdUseCase,
-            getMovieImagesByIdUseCase
+            getMovieDetailByIdUseCase
         )
     }
 
