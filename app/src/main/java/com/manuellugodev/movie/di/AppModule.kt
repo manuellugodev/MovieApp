@@ -6,6 +6,7 @@ import com.manuellugodev.movie.data.detail.DataSourceMovieDetail
 import com.manuellugodev.movie.data.home.dataSource.DataSourceMovieDb
 import com.manuellugodev.movie.data.login.DataSourceLogin
 import com.manuellugodev.movie.data.profile.DataSourceProfile
+import com.manuellugodev.movie.data.search.DataSourceSearch
 import com.manuellugodev.movie.firebase.sources.DataSourceLoginFirebase
 import com.manuellugodev.movie.firebase.sources.DataSourceProfileFirebase
 import com.manuellugodev.movie.retrofit.data.requests.home.MovieRequest
@@ -38,8 +39,10 @@ class AppModule {
         DataSourceLoginFirebase(auth)
 
     @Provides
-    fun dataSourceProfileProvider(firestore: FirebaseFirestore):DataSourceProfile =
+    fun dataSourceProfileProvider(firestore: FirebaseFirestore): DataSourceProfile =
         DataSourceProfileFirebase(firestore)
 
-
+    @Provides
+    fun dataSourceSearchProvider(movieRequest: MovieRequest):DataSourceSearch =
+        RemoteSourceMovieDb(movieRequest)
 }

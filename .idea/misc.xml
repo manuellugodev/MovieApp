@@ -12,10 +12,14 @@
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/MovieApp/app/src/main/res/layout/fragment_category.xml" value="0.25" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/MovieApp/app/src/main/res/layout/fragment_home.xml" value="0.2786458333333333" />
         <entry key="..\:/Users/Manuel/AndroidStudioProjects/MovieApp/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/User/AndroidProjects/github/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/User/AndroidProjects/github/MovieApp/app/src/main/res/layout/fragment_category.xml" value="0.11145833333333334" />
+        <entry key="..\:/Users/User/AndroidProjects/github/MovieApp/app/src/main/res/layout/fragment_profile.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/User/AndroidProjects/github/MovieApp/app/src/main/res/layout/fragment_search.xml" value="0.16666666666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

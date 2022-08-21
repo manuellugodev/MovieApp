@@ -1,8 +1,7 @@
 package com.manuellugodev.movie.di
 
-import android.app.Application
+import com.manuellugodev.movie.ui.search.SearchFragment
 import com.manuellugodev.movie.ui.home.HomeFragment
-import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -11,6 +10,7 @@ import javax.inject.Singleton
 interface MovieComponent {
 
     fun inject(homeFragment: HomeFragment)
+    fun inject(searchFragment: SearchFragment)
 
 
 }

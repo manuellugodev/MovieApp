@@ -8,6 +8,8 @@ import com.manuellugodev.movie.data.login.DataSourceLogin
 import com.manuellugodev.movie.data.login.RepositoryLogin
 import com.manuellugodev.movie.data.profile.DataSourceProfile
 import com.manuellugodev.movie.data.profile.RepositoryProfile
+import com.manuellugodev.movie.data.search.DataSourceSearch
+import com.manuellugodev.movie.data.search.RepositorySearch
 import com.manuellugodev.movie.firebase.sources.DataSourceProfileFirebase
 import dagger.Module
 import dagger.Provides
@@ -32,4 +34,7 @@ class DataModule {
     fun repositoryLoginProvider(dataSourceLogin: DataSourceLogin)=
         RepositoryLogin(dataSourceLogin)
 
+    @Provides
+    fun repositorySearchProvider(dataSourceSearch: DataSourceSearch)=
+        RepositorySearch(dataSourceSearch)
 }

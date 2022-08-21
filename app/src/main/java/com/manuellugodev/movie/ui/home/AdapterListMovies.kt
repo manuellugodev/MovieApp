@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.manuellugodev.movie.R
 import com.manuellugodev.movie.domain.model.Movie
 
-class AdapterListMovies(val context:Context, private var listMovie:List<Movie>, private val itemClickListener:OnMovieClickListener):RecyclerView.Adapter<AdapterListMovies.MyViewHolder>() {
+class AdapterListMovies(val context:Context, private var listMovie:List<Movie>, private val itemClickListener:OnMovieClickListener? = null):RecyclerView.Adapter<AdapterListMovies.MyViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,7 +26,7 @@ class AdapterListMovies(val context:Context, private var listMovie:List<Movie>, 
     override fun onBindViewHolder(holder: AdapterListMovies.MyViewHolder, position: Int) {
         holder.imageMovie.setOnClickListener {
 
-            itemClickListener.onMovieClick(listMovie[position])
+            itemClickListener?.onMovieClick(listMovie[position])
         }
 
         Glide.with(context).load("https://image.tmdb.org/t/p/w500/${listMovie[position].image}").centerCrop().into(holder.imageMovie)
@@ -49,7 +49,7 @@ class AdapterListMovies(val context:Context, private var listMovie:List<Movie>, 
         fun onMovieClick(movie: Movie)
     }
 
-    fun updateDate(movies:List<Movie>){
+    fun updateData(movies:List<Movie>){
         listMovie=movies
         notifyDataSetChanged()
     }

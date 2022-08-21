@@ -3,6 +3,7 @@ package com.manuellugodev.movie.retrofit.sources
 import com.example.android.frameworkretrofit.data.models.movie.ServerMovie
 import com.manuellugodev.movie.BuildConfig
 import com.manuellugodev.movie.data.home.dataSource.DataSourceMovieDb
+import com.manuellugodev.movie.data.search.DataSourceSearch
 import com.manuellugodev.movie.domain.model.Movie
 import com.manuellugodev.movie.retrofit.data.requests.home.MovieRequest
 import com.manuellugodev.movie.vo.DataResult
@@ -10,7 +11,7 @@ import com.manuellugodev.movie.vo.safeApiCall
 import java.io.IOException
 
 class RemoteSourceMovieDb(private val request: MovieRequest):
-    DataSourceMovieDb {
+    DataSourceMovieDb,DataSourceSearch {
 
     override suspend fun getPopularListMovies(): DataResult<List<Movie>> {
         return safeApiCall(
@@ -53,6 +54,19 @@ class RemoteSourceMovieDb(private val request: MovieRequest):
 
         return DataResult.Failure(IOException("Se produjo un error al obetener las peliculas"))
 
+    }
+
+    override suspend fun getMovieBySearch(search:String):DataResult<List<Movie>> {
+        val response=request.service.getMovieBySearch(BuildConfig.MovieDbId,search)
+
+        if(response.isSuccessful){
+            val results=response.body()?.results
+            if(!results.isNullOrEmpty()){
+                return DataResult.Success(results.map { it.toDomainMovie() })
+            }
+        }
+
+        return DataResult.Failure(IOException("Se Produjo un error al Buscar las peliculas"))
     }
 }
 

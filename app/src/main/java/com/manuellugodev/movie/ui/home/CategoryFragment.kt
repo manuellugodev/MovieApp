@@ -56,7 +56,7 @@ class CategoryFragment : Fragment() {
     private fun updateAdapter(listMovie: DataResult<List<Movie>>) {
         when (listMovie) {
             is DataResult.Success -> {
-                adapterMovies.updateDate(listMovie.data)
+                adapterMovies.updateData(listMovie.data)
                 hideProgress()
             }
             is DataResult.Loading -> {
