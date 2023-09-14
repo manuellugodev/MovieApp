@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.manuellugodev.movie">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,8 +14,13 @@
         android:theme="@style/AppTheme">
 
         <activity
+            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+            tools:replace="android:launchMode"
+            android:launchMode="standard" />
+        <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -30,7 +30,7 @@ class ProfileViewModel(private val repository: RepositoryProfile) : ViewModel() 
             emit(dataProfile)
 
         }catch (e:Exception){
-            Log.e("Exception",e.message)
+            Log.e("Exception",e.message.toString())
 
             emit(DataResult.Failure(e))
         }
