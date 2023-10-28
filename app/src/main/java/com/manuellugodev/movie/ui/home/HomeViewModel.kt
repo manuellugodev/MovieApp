@@ -41,7 +41,7 @@ class HomeViewModelFactory(
     private val getPopularMovieUseCase: GetPopularMovieUseCase
 ) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
         return modelClass.getConstructor(
             GetTopRatedMovieUseCase::class.java,

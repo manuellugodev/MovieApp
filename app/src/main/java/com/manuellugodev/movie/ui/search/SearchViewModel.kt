@@ -32,7 +32,7 @@ class SearchViewModel(private val getMovieBySearchUseCase: GetMovieBySearchUseCa
 
 class SearchViewModelFactory(private val getMovieBySearchUseCase: GetMovieBySearchUseCase) :
     ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(GetMovieBySearchUseCase::class.java)
             .newInstance(getMovieBySearchUseCase)
     }

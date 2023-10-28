@@ -25,7 +25,7 @@ class MovieDetailViewModel(private val getMovieDetailByIdUseCase: GetMovieDetail
 class MovieDetailViewModelFactory(
     private val getMovieDetailByIdUseCase: GetMovieDetailByIdUseCase,
 ) : ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return modelClass.getConstructor(
             GetMovieDetailByIdUseCase::class.java,
         ).newInstance(getMovieDetailByIdUseCase)

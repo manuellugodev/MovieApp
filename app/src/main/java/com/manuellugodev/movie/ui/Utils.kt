@@ -1,7 +1,9 @@
 package com.manuellugodev.movie.ui
 
+import androidx.appcompat.widget.SearchView
 
-class SearchListener(private val action:(String)-> Unit):android.widget.SearchView.OnQueryTextListener{
+
+class SearchListener(private val action:(String)-> Unit):SearchView.OnQueryTextListener{
 
     private var word=""
     override fun onQueryTextSubmit(query: String?): Boolean {
