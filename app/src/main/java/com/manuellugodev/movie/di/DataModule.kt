@@ -31,8 +31,8 @@ class DataModule {
 
 
     @Provides
-    fun repositoryLoginProvider(dataSourceLogin: DataSourceLogin)=
-        RepositoryLogin(dataSourceLogin)
+    fun repositoryLoginProvider(dataSourceLogin: DataSourceLogin,dataSourceProfile: DataSourceProfile)=
+        RepositoryLogin(dataSourceLogin,dataSourceProfile)
 
     @Provides
     fun repositorySearchProvider(dataSourceSearch: DataSourceSearch)=

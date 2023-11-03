@@ -3,6 +3,8 @@ package com.manuellugodev.movie.ui.login
 import android.util.Log
 import androidx.lifecycle.*
 import com.manuellugodev.movie.data.login.RepositoryLogin
+import com.manuellugodev.movie.domain.model.User
+import com.manuellugodev.movie.vo.DataResult
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,7 +16,8 @@ class LoginViewModel(private val repository: RepositoryLogin):ViewModel() {
 
     val resultLoginUser:LiveData<ResultLogin<String>> =_resultLoginUser
 
-
+    private val _resultSignUpUser:MutableLiveData<DataResult<User>> = MutableLiveData()
+    val resultSignUpUser:LiveData<DataResult<User>> = _resultSignUpUser
     fun loginWithUserAndPassword(email:String,password:String){
         viewModelScope.launch(Dispatchers.Main){
 
@@ -45,6 +48,20 @@ class LoginViewModel(private val repository: RepositoryLogin):ViewModel() {
 
         }
 
+    }
+
+    fun signIn(user: User, password: String) {
+        viewModelScope.launch(Dispatchers.Main) {
+            _resultSignUpUser.value =DataResult.Loading()
+            try {
+                withContext(Dispatchers.IO){
+                    val result = repository.signUp(user, password)
+                    _resultSignUpUser.postValue(result)
+                }
+            }catch (e:Exception){
+                _resultSignUpUser.value = DataResult.Failure(e)
+            }
+        }
     }
 
 }

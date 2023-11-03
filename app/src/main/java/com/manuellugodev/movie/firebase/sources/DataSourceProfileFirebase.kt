@@ -20,4 +20,9 @@ class DataSourceProfileFirebase(private val db:FirebaseFirestore) :
 
         return  DataResult.Success(resultUser!!)
     }
+
+    override suspend fun saveProfileNewUser(user: User,uid:String): DataResult<User> {
+        val result = db.collection("users").document(uid).set(user).await()
+        return DataResult.Success(user)
+    }
 }

@@ -4,6 +4,8 @@ import android.accounts.AuthenticatorException
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.manuellugodev.movie.data.login.DataSourceLogin
+import com.manuellugodev.movie.domain.model.User
+import com.manuellugodev.movie.vo.DataResult
 import com.manuellugodev.movie.vo.ResultLogin
 import kotlinx.coroutines.tasks.await
 
@@ -34,5 +36,10 @@ class DataSourceLoginFirebase(private val auth:FirebaseAuth) :
             ResultLogin.Failure(Exception("Error trying LogOut Session"))
         }
 
+    }
+
+    override suspend fun signUp(user: User, password: String): DataResult<String?> {
+        val result = auth.createUserWithEmailAndPassword(user.email,password).await()
+        return DataResult.Success(result.user?.uid)
     }
 }

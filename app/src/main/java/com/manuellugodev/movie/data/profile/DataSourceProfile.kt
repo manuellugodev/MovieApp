@@ -6,4 +6,5 @@ import com.manuellugodev.movie.vo.DataResult
 interface DataSourceProfile {
 
     suspend fun getProfileUser(uid:String): DataResult<User>
+    suspend fun saveProfileNewUser(user:User,uid:String) :DataResult<User>
 }

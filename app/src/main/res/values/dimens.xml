@@ -6,4 +6,6 @@
     <dimen name="subtitleText">18sp</dimen>
     <dimen name="subtitleTextMinus">14sp</dimen>
     <dimen name="titleText">24sp</dimen>
+    <dimen name="editTextSize">48sp</dimen>
+    <dimen name="editTextHeight">48sp</dimen>
 </resources>
